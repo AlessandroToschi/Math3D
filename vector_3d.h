@@ -80,6 +80,14 @@ struct vector_3d {
         const float mag = magnitude();
         return vector_3d{x / mag, y / mag, z / mag};
     }
+
+    vector_3d cross(const vector_3d& other) const {
+        return vector_3d{
+            y * other.z - z * other.y,
+            z * other.x - x * other.z,
+            x * other.y - y * other.x
+        };
+    }
 };
 
 inline vector_3d operator+(const vector_3d& lhs, const vector_3d& rhs) {

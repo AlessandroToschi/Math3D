@@ -101,6 +101,26 @@ struct vector_3d_neon {
         return *this;
     }
 
+    vector_3d_neon cross(const vector_3d_neon& other) const {
+        const auto yzxw_transform = [](const vector_3d_neon& xyzw) {
+            const auto yzwx = vextq_f32(xyzw.xyz, xyzw.xyz, 1);
+            const auto wx = vget_high_f32(yzwx);
+            const auto xw = vrev64_f32(wx);
+            const auto yz = vget_low_f32(yzwx);
+            return vcombine_f32(yz, xw);
+        };
+
+        const auto yzxy = yzxw_transform(*this);
+        const auto other_yzxw = yzxw_transform(other);
+
+        const auto zxyw = vsubq_f32(
+            vmulq_f32(xyz, other_yzxw),
+            vmulq_f32(yzxy, other.xyz)
+        );
+
+        return yzxw_transform(zxyw);
+    }
+
 private:
     vector_3d_neon(float32x4_t xyz) : xyz(xyz) {}
 };

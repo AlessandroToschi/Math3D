@@ -174,6 +174,15 @@ TEST(Vector3D, Normalize) {
     EXPECT_DOUBLE_EQ(a.z, 0.8f);
 }
 
+TEST(Vector3D, Cross) {
+    vector_3d a{1.0f, 2.0f, 3.0f};
+    vector_3d b{4.0f, 5.0f, 6.0f};
+    vector_3d c = a.cross(b);
+    EXPECT_DOUBLE_EQ(c.x, -3.0f);
+    EXPECT_DOUBLE_EQ(c.y, 6.0f);
+    EXPECT_DOUBLE_EQ(c.z, -3.0f);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
