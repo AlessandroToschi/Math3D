@@ -88,6 +88,10 @@ struct vector_3d {
             x * other.y - y * other.x
         };
     }
+    
+    float angle(const vector_3d& other) const {
+        return acosf(dot(other) / (magnitude() * other.magnitude()));
+    }
 };
 
 inline vector_3d operator+(const vector_3d& lhs, const vector_3d& rhs) {
@@ -96,6 +100,10 @@ inline vector_3d operator+(const vector_3d& lhs, const vector_3d& rhs) {
 
 inline vector_3d operator-(const vector_3d& lhs, const vector_3d& rhs) {
     return vector_3d{lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
+}
+
+inline vector_3d operator-(const vector_3d& lhs) {
+    return vector_3d{-lhs.x, -lhs.y, -lhs.z};
 }
 
 inline vector_3d operator*(const vector_3d& lhs, float scalar) {

@@ -48,6 +48,10 @@ struct vector_3d_neon {
         return vector_3d_neon(vsubq_f32(xyz, other.xyz));
     }
 
+    vector_3d_neon operator-() const {
+        return vector_3d_neon(vnegq_f32(xyz));
+    }
+
     vector_3d_neon& operator*=(float scalar) {
         xyz = vmulq_n_f32(xyz, scalar);
         return *this;
@@ -119,6 +123,10 @@ struct vector_3d_neon {
         );
 
         return yzxw_transform(zxyw);
+    }
+
+    float angle(const vector_3d_neon& other) const {
+        return acosf(dot(other) / (magnitude() * other.magnitude()));
     }
 
 private:
