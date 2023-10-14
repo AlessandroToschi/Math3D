@@ -203,10 +203,10 @@ TEST(Vector3D, Projection) {
 TEST(Vector3D, Rejection) {
     vector_3d a{1.0f, 0.0f, 0.0f};
     vector_3d b{4.0f, 5.0f, 6.0f};
-    vector_3d c = a.rejection(b);
-    EXPECT_FLOAT_EQ(c.x, -3.0);
-    EXPECT_FLOAT_EQ(c.y, -5.0f);
-    EXPECT_FLOAT_EQ(c.z, -6.0);
+    vector_3d c = b.rejection(a);
+    EXPECT_FLOAT_EQ(c.x, 0.0f);
+    EXPECT_FLOAT_EQ(c.y, 5.0f);
+    EXPECT_FLOAT_EQ(c.z, 6.0);
 }
 
 int main(int argc, char **argv) {

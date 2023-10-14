@@ -126,8 +126,7 @@ struct vector_3d {
     }
 
     vector_3d rejection(const vector_3d& other) const {
-        const auto& x = *this;
-        return  x - other;
+        return  *this - projection(other);
     }
 };
 
