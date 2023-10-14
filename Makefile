@@ -1,17 +1,20 @@
 CXX := clang++
 CXX_FLAGS := -std=c++17 -g -Wall 
-INCLUDES := -I . -I /opt/homebrew/include
-LIBRARIES := -L /opt/homebrew/lib -l gtest
+TEST_INCLUDES := -I . -I /opt/homebrew/include
+TEST_LIBRARIES := -L /opt/homebrew/lib -l gtest
 OUT_DIR := out
 
-out_dir:
+clean:
+	rm -rf $(OUT_DIR)
+
+out_dir: clean
 	mkdir -p $(OUT_DIR)
 
-test: out_dir
-	$(CXX) $(CXX_FLAGS) -o $(OUT_DIR)/vector_3d_test $(INCLUDES) $(LIBRARIES) test/vector_3d_test.cc
-	$(CXX) $(CXX_FLAGS) -o $(OUT_DIR)/vector_3d_neon_test $(INCLUDES) $(LIBRARIES) test/vector_3d_neon_test.cc
+%_test: out_dir
+	$(CXX) $(CXX_FLAGS) -o $(OUT_DIR)/$@ $(TEST_INCLUDES) $(TEST_LIBRARIES) test/$@.cc
 
-	./$(OUT_DIR)/vector_3d_test
-	./$(OUT_DIR)/vector_3d_neon_test
+
+test: vector_3d_test vector_3d_neon_test
+	for t in $^; do ./${OUT_DIR}/$$t; done
 
 .PHONY: test
