@@ -129,6 +129,14 @@ struct vector_3d_neon {
         return acosf(dot(other) / (magnitude() * other.magnitude()));
     }
 
+    vector_3d_neon projection(const vector_3d_neon& other) const {
+        return other * (dot(other) / other.dot(other));
+    }
+
+    vector_3d_neon rejection(const vector_3d_neon& other) const {
+        return *this - projection(other);
+    }
+
 private:
     vector_3d_neon(float32x4_t xyz) : xyz(xyz) {}
 };

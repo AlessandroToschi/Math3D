@@ -191,6 +191,24 @@ TEST(Vector3D, Angle) {
     EXPECT_FLOAT_EQ(a.angle(a), 0.0f);
 }
 
+TEST(Vector3D, Projection) {
+    vector_3d a{1.0f, 0.0f, 0.0f};
+    vector_3d b{4.0f, 5.0f, 6.0f};
+    vector_3d c = b.projection(a);
+    EXPECT_FLOAT_EQ(c.x, 4.0f);
+    EXPECT_FLOAT_EQ(c.y, 0.0f);
+    EXPECT_FLOAT_EQ(c.z, 0.0f);
+}
+
+TEST(Vector3D, Rejection) {
+    vector_3d a{1.0f, 0.0f, 0.0f};
+    vector_3d b{4.0f, 5.0f, 6.0f};
+    vector_3d c = a.rejection(b);
+    EXPECT_FLOAT_EQ(c.x, -3.0);
+    EXPECT_FLOAT_EQ(c.y, -5.0f);
+    EXPECT_FLOAT_EQ(c.z, -6.0);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

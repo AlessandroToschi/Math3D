@@ -1,5 +1,5 @@
 CXX := clang++
-CXX_FLAGS := -std=c++17 -g
+CXX_FLAGS := -std=c++17 -g -Wall 
 INCLUDES := -I . -I /opt/homebrew/include
 LIBRARIES := -L /opt/homebrew/lib -l gtest
 OUT_DIR := out

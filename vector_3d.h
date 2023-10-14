@@ -18,6 +18,34 @@ struct vector_3d {
     float& operator[](int i) { return (&x)[i]; }
     float operator[](int i) const { return (&x)[i]; }
 
+    inline vector_3d operator+(const vector_3d& rhs) const {
+        return vector_3d{x + rhs.x, y + rhs.y, z + rhs.z};
+    }
+
+    inline vector_3d operator-(const vector_3d& rhs) const {
+        return vector_3d{x - rhs.x, y - rhs.y, z - rhs.z};
+    }
+
+    inline vector_3d operator-() const {
+        return vector_3d{-x, -y, -z};
+    }
+
+    inline vector_3d operator*(float scalar) const {
+        return vector_3d{x * scalar, y * scalar, z * scalar};
+    }
+
+    inline vector_3d operator*(const vector_3d& rhs) const {
+        return vector_3d{x * rhs.x, y * rhs.y, z * rhs.z};
+    }
+
+    inline vector_3d operator/(float scalar) const {
+        return vector_3d{x / scalar, y / scalar, z / scalar};
+    }
+
+    inline vector_3d operator/(const vector_3d& rhs) const {
+        return vector_3d{x / rhs.x, y / rhs.y, z / rhs.z};
+    }
+
     vector_3d& operator+=(const vector_3d& other) {
         x += other.x;
         y += other.y;
@@ -92,38 +120,15 @@ struct vector_3d {
     float angle(const vector_3d& other) const {
         return acosf(dot(other) / (magnitude() * other.magnitude()));
     }
+
+    vector_3d projection(const vector_3d& other) const {
+        return other * (dot(other) / other.dot(other));
+    }
+
+    vector_3d rejection(const vector_3d& other) const {
+        const auto& x = *this;
+        return  x - other;
+    }
 };
-
-inline vector_3d operator+(const vector_3d& lhs, const vector_3d& rhs) {
-    return vector_3d{lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z};
-}
-
-inline vector_3d operator-(const vector_3d& lhs, const vector_3d& rhs) {
-    return vector_3d{lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
-}
-
-inline vector_3d operator-(const vector_3d& lhs) {
-    return vector_3d{-lhs.x, -lhs.y, -lhs.z};
-}
-
-inline vector_3d operator*(const vector_3d& lhs, float scalar) {
-    return vector_3d{lhs.x * scalar, lhs.y * scalar, lhs.z * scalar};
-}
-
-inline vector_3d operator*(float scalar, const vector_3d& rhs) {
-    return vector_3d{rhs.x * scalar, rhs.y * scalar, rhs.z * scalar};
-}
-
-inline vector_3d operator*(const vector_3d& lhs, const vector_3d& rhs) {
-    return vector_3d{lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z};
-}
-
-inline vector_3d operator/(const vector_3d& lhs, float scalar) {
-    return vector_3d{lhs.x / scalar, lhs.y / scalar, lhs.z / scalar};
-}
-
-inline vector_3d operator/(const vector_3d& lhs, const vector_3d& rhs) {
-    return vector_3d{lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z};
-}
 
 #endif // VECTOR_3D_H_
